@@ -103,6 +103,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         IActivityManage.getInstance().addActivity(this);
         init();
+        // TODO: 2017/4/17  
     }
 
     @Override
