@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:edit="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/loginActivity_editView_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dip"
+        android:background="@color/colorPrimary"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="易评"
+            android:background="@drawable/ic_round_64"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/loginActivity_editView_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="20dp">
+
+        <com.wayto.android.widget.ResetEditView
+            android:id="@+id/loginActivity_account_editView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            edit:edit_hint="输入用户名"
+            edit:edite_icon="@mipmap/login_user" />
+
+        <View
+            style="@style/line_horizontal"
+            android:layout_marginLeft="10dp" />
+
+        <com.wayto.android.widget.ResetEditView
+            android:id="@+id/loginActivity_password_editView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            edit:edit_hint="输入密码"
+            edit:edit_inputType="password"
+            edit:edite_icon="@mipmap/login_mima" />
+
+        <View
+            style="@style/line_horizontal"
+            android:layout_marginLeft="10dp" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/loginActivity_login_button"
+        style="@style/default_button_style"
+        android:layout_below="@+id/loginActivity_editView_layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/common_btn_red_selector"
+        android:text="登录"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/loginActivity_login_button"
+        android:gravity="center|right"
+        android:text="忘记密码?"
+        android:layout_marginRight="20dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
+
+
+</RelativeLayout>
