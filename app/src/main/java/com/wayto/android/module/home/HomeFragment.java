@@ -1,8 +1,11 @@
 package com.wayto.android.module.home;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,6 +183,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                             Bundle bundle=new Bundle();
                             bundle.putInt("id",taskDateBean.getId());
                             ISkipActivityUtil.startIntent(getContext(),RecordTaskActivity.class,bundle);
+                        }
+                    });
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Uri uri;
+                            if (TextUtils.isEmpty(taskDateBean.getTaskurl())) {
+                                uri = Uri.parse("http://baidu.com");
+                            } else
+                                uri = Uri.parse(taskDateBean.getTaskurl());
+                            Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(it);
                         }
                     });
                     taskContentLayout.addView(view);

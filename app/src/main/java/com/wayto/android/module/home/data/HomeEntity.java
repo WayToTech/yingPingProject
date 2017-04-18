@@ -162,7 +162,7 @@ public class HomeEntity {
 
         private int id;
         private String title;
-        private Object taskurl;
+        private String taskurl;
         private String tasktype;
         private String integral;
         private String completiontime;
@@ -184,11 +184,11 @@ public class HomeEntity {
             this.title = title;
         }
 
-        public Object getTaskurl() {
+        public String getTaskurl() {
             return taskurl;
         }
 
-        public void setTaskurl(Object taskurl) {
+        public void setTaskurl(String taskurl) {
             this.taskurl = taskurl;
         }
 
