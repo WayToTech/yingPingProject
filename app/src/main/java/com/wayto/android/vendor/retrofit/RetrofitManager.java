@@ -54,20 +54,6 @@ public class RetrofitManager {
     }
 
     /**
-     * 反地理编码Service
-     *
-     * @return
-     */
-    public APIService getGeocodinService() {
-        Retrofit mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://restapi.amap.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        APIService service = mRetrofit.create(APIService.class);
-        return service;
-    }
-
-    /**
      * 设置Client请求头
      *
      * @return

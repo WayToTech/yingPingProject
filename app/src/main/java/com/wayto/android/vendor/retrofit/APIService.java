@@ -48,7 +48,7 @@ public interface APIService {
      * @param url
      */
     @GET
-    Call<ResponseModel> loginRepo(@Url String url);
+    Call<ResponseModel<UserInfoEntity>> loginRepo(@Url String url);
 
     /**
      * 主界面

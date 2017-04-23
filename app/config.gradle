@@ -9,7 +9,8 @@ android {
             buildConfigField "boolean", "LOGSWITCH", "true"
         }
         debug {
-            buildConfigField "String", "DOMAI", "\"http://112.74.33.248/\""
+//            buildConfigField "String", "DOMAI", "\"http://112.74.33.248/\""
+            buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
             buildConfigField "String", "QINIU_DOMAIN", "\"http://oi7qaq1x0.bkt.clouddn.com/\""
             /* buildConfigField "String", "QINIU_DOMAIN", "\"http://img.wayto.com.cn/\""*/
             buildConfigField "boolean", "LOGSWITCH", "false"

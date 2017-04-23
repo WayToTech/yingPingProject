@@ -31,7 +31,7 @@ public class AccountRemoteRepo implements AccountDataSoure {
     private final String TAG = getClass().getSimpleName();
 
     private static AccountRemoteRepo remoteRepo;
-    private Call<ResponseModel> LoginCall;
+    private Call<ResponseModel<UserInfoEntity>> LoginCall;
     private Call<ResponseModel> modifyHeadCall;
     private Call<ResponseModel> modifyPwdCall;
 
@@ -50,9 +50,9 @@ public class AccountRemoteRepo implements AccountDataSoure {
         }
         String body = "login/appCheckLogin?userName=" + account + "&password=" + password;
         LoginCall = RetrofitManager.getInstance().getService().loginRepo(body);
-        LoginCall.enqueue(new Callback<ResponseModel>() {
+        LoginCall.enqueue(new Callback<ResponseModel<UserInfoEntity>>() {
             @Override
-            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+            public void onResponse(Call<ResponseModel<UserInfoEntity>> call, Response<ResponseModel<UserInfoEntity>> response) {
                 if (response.code() == Constant.HTTP_SUCESS_CODE) {
                     if (response.body().getCode() == 200) {
                         callBack.onLoginSuccess();
@@ -65,7 +65,7 @@ public class AccountRemoteRepo implements AccountDataSoure {
             }
 
             @Override
-            public void onFailure(Call<ResponseModel> call, Throwable t) {
+            public void onFailure(Call<ResponseModel<UserInfoEntity>> call, Throwable t) {
                 callBack.onLoginFailure(IUtil.getStrToRes(R.string.login_failure));
             }
         });

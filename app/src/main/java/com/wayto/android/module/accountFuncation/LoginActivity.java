@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements AccountContract.Login
             return;
         }
         mLoginPresenter.login();
-        ISkipActivityUtil.startIntent(this, MainActivity.class);
+//        ISkipActivityUtil.startIntent(this, MainActivity.class);
     }
 
     @Override
