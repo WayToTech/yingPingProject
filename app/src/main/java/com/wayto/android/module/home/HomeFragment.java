@@ -15,16 +15,21 @@ import android.widget.TextView;
 
 import com.wayto.android.R;
 import com.wayto.android.base.BaseFragment;
-import com.wayto.android.module.comment.TaskClassifyActivity;
+import com.wayto.android.common.eventbus.NoticeEvent;
 import com.wayto.android.module.comment.RecordTaskActivity;
+import com.wayto.android.module.comment.TaskClassifyActivity;
 import com.wayto.android.module.conference.ConferenceDetailsActivity;
 import com.wayto.android.module.home.data.HomeEntity;
 import com.wayto.android.module.notice.NoticeDetailsActivity;
+import com.wayto.android.module.notice.data.NoticeEntity;
 import com.wayto.android.utils.ISkipActivityUtil;
 import com.wayto.android.view.PullToRefreshRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 主页
@@ -122,9 +127,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     view.findViewById(R.id.notice_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Bundle bundle=new Bundle();
-                            bundle.putString("id",noticeDateBean.getId()+"");
-                            ISkipActivityUtil.startIntent(getContext(), NoticeDetailsActivity.class,bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id", noticeDateBean.getId() + "");
+                            ISkipActivityUtil.startIntent(getContext(), NoticeDetailsActivity.class, bundle);
                         }
                     });
                     contentTextView.setText(noticeDateBean.getTitle());
@@ -144,9 +149,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     view.findViewById(R.id.meeting_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Bundle bundle=new Bundle();
-                            bundle.putInt("id",meetingNoticeDateBean.getId());
-                            ISkipActivityUtil.startIntent(getContext(), ConferenceDetailsActivity.class,bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("id", meetingNoticeDateBean.getId());
+                            ISkipActivityUtil.startIntent(getContext(), ConferenceDetailsActivity.class, bundle);
                         }
                     });
                     timeTextView.setText("会议时间:" + meetingNoticeDateBean.getReleasetime());
@@ -159,17 +164,17 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
             }
 
             /*网评任务*/
-            if (entity.getTaskDate().size()>0){
-                taskNumber.setText(entity.getTaskDate().size()+"");
-                for (final HomeEntity.TaskDateBean taskDateBean:entity.getTaskDate()){
-                    View view=LayoutInflater.from(getContext()).inflate(R.layout.item_task,null);
-                    TextView content=ButterKnife.findById(view,R.id.task_content);
-                    TextView typeTime=ButterKnife.findById(view,R.id.task_type_time);
-                    TextView integral=ButterKnife.findById(view,R.id.task_integral);
-                    Button button=ButterKnife.findById(view,R.id.task_button);
+            if (entity.getTaskDate().size() > 0) {
+                taskNumber.setText(entity.getTaskDate().size() + "");
+                for (final HomeEntity.TaskDateBean taskDateBean : entity.getTaskDate()) {
+                    View view = LayoutInflater.from(getContext()).inflate(R.layout.item_task, null);
+                    TextView content = ButterKnife.findById(view, R.id.task_content);
+                    TextView typeTime = ButterKnife.findById(view, R.id.task_type_time);
+                    TextView integral = ButterKnife.findById(view, R.id.task_integral);
+                    Button button = ButterKnife.findById(view, R.id.task_button);
                     content.setText(taskDateBean.getTitle());
-                    typeTime.setText(taskDateBean.getTasktype()+"  截止时间"+taskDateBean.getCompletiontime());
-                    integral.setText(entity.getIntegral()+"积分");
+                    typeTime.setText(taskDateBean.getTasktype() + "  截止时间" + taskDateBean.getCompletiontime());
+                    integral.setText(entity.getIntegral() + "积分");
                     String status = taskDateBean.getStatus();
                     if ("待完成".equals(status)) {
                         button.setText("立即执行");
@@ -180,9 +185,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Bundle bundle=new Bundle();
-                            bundle.putInt("id",taskDateBean.getId());
-                            ISkipActivityUtil.startIntent(getContext(),RecordTaskActivity.class,bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("id", taskDateBean.getId());
+                            ISkipActivityUtil.startIntent(getContext(), RecordTaskActivity.class, bundle);
                         }
                     });
                     button.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +204,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     });
                     taskContentLayout.addView(view);
                 }
-            }else {
+            } else {
                 taskLayout.setVisibility(View.GONE);
             }
             taskNumber.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +213,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     ISkipActivityUtil.startIntent(getContext(), TaskClassifyActivity.class);
                 }
             });
-        }else {
+        } else {
             noticeLayout.setVisibility(View.GONE);
             meetingLayout.setVisibility(View.GONE);
             taskLayout.setVisibility(View.GONE);
@@ -223,5 +228,29 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
         noticeLayout.setVisibility(View.GONE);
         meetingLayout.setVisibility(View.GONE);
         taskLayout.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.record_button)
+    public void onClick() {
+        ISkipActivityUtil.startIntent(getContext(), RecordMessageActivity.class);
+    }
+
+    @OnClick({R.id.notice_title_layout, R.id.meeting_title_layout, R.id.task_title_layout})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.notice_title_layout:
+                NoticeEvent noticeEvent=new NoticeEvent();
+                noticeEvent.setFlag(1);
+                EventBus.getDefault().post(noticeEvent);
+                break;
+            case R.id.meeting_title_layout:
+                NoticeEvent noticeEvent1=new NoticeEvent();
+                noticeEvent1.setFlag(2);
+                EventBus.getDefault().post(noticeEvent1);
+                break;
+            case R.id.task_title_layout:
+                ISkipActivityUtil.startIntent(getContext(), TaskClassifyActivity.class);
+                break;
+        }
     }
 }

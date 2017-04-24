@@ -265,11 +265,37 @@
                             android:textSize="18sp" />
                     </RelativeLayout>
 
-                    <LinearLayout
-                        android:id="@+id/message_content_Layout"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" />
+                        android:background="#EDEDED"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="15dp">
+
+                        <TextView
+                            android:id="@+id/notice_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="您可将日常看到的敏感软文报送，获得额外积分"
+                            android:layout_toLeftOf="@+id/record_button"
+                            android:textColor="@color/gray"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/record_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/btn_round_red"
+                            android:text="立即上报"
+                            android:textColor="@color/white"
+                            android:textSize="10sp" />
+                    </RelativeLayout>
+
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

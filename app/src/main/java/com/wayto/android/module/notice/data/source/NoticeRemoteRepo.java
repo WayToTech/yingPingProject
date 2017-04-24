@@ -1,8 +1,10 @@
 package com.wayto.android.module.notice.data.source;
 
+import com.wayto.android.common.Constant;
 import com.wayto.android.entity.ResponseModel;
 import com.wayto.android.module.notice.data.NoticeDetailsEntity;
 import com.wayto.android.module.notice.data.NoticeEntity;
+import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.vendor.retrofit.RetrofitManager;
 
 import java.util.List;
@@ -25,7 +27,8 @@ public class NoticeRemoteRepo implements NoticeDataSource {
 
     @Override
     public void requestNoticeData(final NoticeCallBack callBack) {
-        call = RetrofitManager.getInstance().getService().getNoticeList();
+        String url="notice/appNoticeList?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
+        call = RetrofitManager.getInstance().getService().getNoticeList(url);
         call.enqueue(new Callback<ResponseModel<List<NoticeEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<NoticeEntity>>> call, Response<ResponseModel<List<NoticeEntity>>> response) {
@@ -49,7 +52,7 @@ public class NoticeRemoteRepo implements NoticeDataSource {
 
     @Override
     public void requestNoticeDetailsData(String id, final NoticeDetailsCallBack callBack) {
-        String url = "notice/appDetailById?id=" + id;
+        String url = "notice/appDetailById?id=" + id+"&sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
         noticeDetailsCall = RetrofitManager.getInstance().getService().getNoticeDetails(url);
         noticeDetailsCall.enqueue(new Callback<ResponseModel<NoticeDetailsEntity>>() {
             @Override

@@ -61,7 +61,7 @@ public class AccountPresenter implements AccountDataSoure.LoginCallBack, Account
     }
 
     @Override
-    public void onLoginSuccess() {
+    public void onLoginSuccess(String session) {
 //        if (entity != null) {
 //            /*数据本地化*/
 //            ISpfUtil.setValue(Constant.ACCESS_TOKEN_KEY, entity.getAccess_token());
@@ -69,6 +69,7 @@ public class AccountPresenter implements AccountDataSoure.LoginCallBack, Account
 //            ISpfUtil.setValue(Constant.PSSWORD_KEY, loginView.getPassword());
 //            ISpfUtil.setValue(Constant.USERINFO_KEY, new Gson().toJson(entity));
 //        }
+        ISpfUtil.setValue(Constant.ACCESS_TOKEN_KEY,session);
         loginView.loginSuccess();
         loginView.dismissDialog();
     }

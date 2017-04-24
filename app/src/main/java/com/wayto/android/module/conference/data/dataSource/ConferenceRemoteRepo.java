@@ -1,8 +1,10 @@
 package com.wayto.android.module.conference.data.dataSource;
 
+import com.wayto.android.common.Constant;
 import com.wayto.android.entity.ResponseModel;
 import com.wayto.android.module.conference.data.ConferenceDetailsEntity;
 import com.wayto.android.module.conference.data.ConferenceEntity;
+import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.vendor.retrofit.RetrofitManager;
 
 import java.util.List;
@@ -24,7 +26,8 @@ public class ConferenceRemoteRepo implements ConferenceDatasource {
 
     @Override
     public void requestMeetingNotice(final ConferenceCallBack callBack) {
-        call = RetrofitManager.getInstance().getService().getMeetingNotice();
+        String url="meetingNotice/appMeetingNoticeList?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
+        call = RetrofitManager.getInstance().getService().getMeetingNotice(url);
         call.enqueue(new Callback<ResponseModel<List<ConferenceEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<ConferenceEntity>>> call, Response<ResponseModel<List<ConferenceEntity>>> response) {
@@ -49,7 +52,7 @@ public class ConferenceRemoteRepo implements ConferenceDatasource {
     @Override
     public void requestMeetingDetails(int id, final ConferenceDetailsCallBack callBack) {
         callBack.onConferenceDetailsStart();
-        String url = "meetingNotice/appDetailById?id=" + id;
+        String url = "meetingNotice/appDetailById?id=" + id+"&sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
         Call<ResponseModel<ConferenceDetailsEntity>> call = RetrofitManager.getInstance().getService().getMeetingNoticeDetails(url);
         call.enqueue(new Callback<ResponseModel<ConferenceDetailsEntity>>() {
             @Override

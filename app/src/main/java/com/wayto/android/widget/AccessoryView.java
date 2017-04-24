@@ -229,7 +229,7 @@ public class AccessoryView extends LinearLayout implements AdapterView.OnItemCli
     public List<String> getImageLists() {
         List<String> list = new ArrayList<>();
         for (PictureEntity entity : adapter.getList()) {
-            if (!adapter.getList().get(adapter.getCount() - 1).getUrl().equals(AccessoryImgAdapter.ADD_IMG_FLAG)) {
+            if (!entity.getUrl().equals(AccessoryImgAdapter.ADD_IMG_FLAG)) {
                 list.add(entity.getUrl());
             }
         }

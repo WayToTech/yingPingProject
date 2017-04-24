@@ -1,7 +1,9 @@
 package com.wayto.android.module.vote.data.source;
 
+import com.wayto.android.common.Constant;
 import com.wayto.android.entity.ResponseModel;
 import com.wayto.android.module.vote.data.VoteEntity;
+import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.vendor.retrofit.RetrofitManager;
 
 import java.util.List;
@@ -21,7 +23,8 @@ public class VoteRemoteRepo implements VoteDataSource {
 
     @Override
     public void requestVoteList(final VoteCallBack callBack) {
-        Call<ResponseModel<List<VoteEntity>>> call = RetrofitManager.getInstance().getService().getVoteList();
+        String url = "/vote/appVoteList?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
+        Call<ResponseModel<List<VoteEntity>>> call = RetrofitManager.getInstance().getService().getVoteList(url);
         call.enqueue(new Callback<ResponseModel<List<VoteEntity>>>() {
             @Override
             public void onResponse(Call<ResponseModel<List<VoteEntity>>> call, Response<ResponseModel<List<VoteEntity>>> response) {
@@ -46,20 +49,20 @@ public class VoteRemoteRepo implements VoteDataSource {
     @Override
     public void carridVote(int id, int voteId, final CarridVoteCallBack callBack) {
         callBack.onCarridVoteStart();
-        String url="vote/appMemberVote?id="+id+"&voteId="+voteId;
-        Call<ResponseModel> call=RetrofitManager.getInstance().getService().arridVote(url);
+        String url = "vote/appMemberVote?id=" + id + "&voteId=" + voteId + "?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
+        Call<ResponseModel> call = RetrofitManager.getInstance().getService().arridVote(url);
         call.enqueue(new Callback<ResponseModel>() {
             @Override
             public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
-                if (response.code()==200){
-                    if (response.body().getCode()==200){
+                if (response.code() == 200) {
+                    if (response.body().getCode() == 200) {
                         callBack.onCarridVoteSuccess();
                         callBack.onCarridVoteEnd();
-                    }else {
+                    } else {
                         callBack.onCarridVoteFailure();
                         callBack.onCarridVoteEnd();
                     }
-                }else {
+                } else {
                     callBack.onCarridVoteFailure();
                     callBack.onCarridVoteEnd();
                 }

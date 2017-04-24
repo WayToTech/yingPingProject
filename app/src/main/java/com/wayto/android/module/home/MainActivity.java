@@ -10,6 +10,7 @@ import com.wayto.android.R;
 import com.wayto.android.base.BaseActivity;
 import com.wayto.android.base.BaseFragment;
 import com.wayto.android.common.dialog.DialogFactory;
+import com.wayto.android.common.eventbus.NoticeEvent;
 import com.wayto.android.module.comment.CommentListFragment;
 import com.wayto.android.module.conference.ConferenceListFragment;
 import com.wayto.android.module.mainFuncations.MainContract;
@@ -130,6 +131,19 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
             case TAB_MINE:
                 setToolbarCenterTitle(R.string.main_mine_tab);
                 setToolbarVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    @Override
+    public void onMainThreedEvent(NoticeEvent event) {
+        super.onMainThreedEvent(event);
+        switch (event.getFlag()){
+            case 1:
+                mainBottomNavigationBar.setFirstSelectedTab(TAB_MINE);
+                break;
+            case 2:
+                mainBottomNavigationBar.setFirstSelectedTab(TAB_RECORD);
                 break;
         }
     }

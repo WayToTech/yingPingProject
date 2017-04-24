@@ -66,6 +66,11 @@
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
+            android:name=".module.home.RecordMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
             android:name=".module.accountFuncation.ModifyPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />

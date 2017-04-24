@@ -17,7 +17,7 @@ public interface AccountDataSoure extends BaseDataSourse {
 
     interface LoginCallBack {
 
-        void onLoginSuccess();
+        void onLoginSuccess(String sessionId);
 
         void onLoginFailure(String error);
 

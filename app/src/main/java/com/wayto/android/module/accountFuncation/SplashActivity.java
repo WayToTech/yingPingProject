@@ -101,7 +101,7 @@ public class SplashActivity extends BaseActivity implements AccountContract.Logi
 
     @Override
     public void loginSuccess() {
-        ISkipActivityUtil.startIntent(this,LoginActivity.class);
+        ISkipActivityUtil.startIntent(this,MainActivity.class);
         finish();
     }
 

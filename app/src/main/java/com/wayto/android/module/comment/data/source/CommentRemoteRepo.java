@@ -1,8 +1,10 @@
 package com.wayto.android.module.comment.data.source;
 
+import com.wayto.android.common.Constant;
 import com.wayto.android.entity.ResponseModel;
 import com.wayto.android.module.comment.data.TaskDetailsEntity;
 import com.wayto.android.module.comment.data.TaskEntity;
+import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.vendor.retrofit.RetrofitManager;
 
 import java.util.List;
@@ -24,6 +26,7 @@ public class CommentRemoteRepo implements CommentDataSource {
 
     @Override
     public void requestTaskData(String url,final CommentCallBack commentCallBack) {
+        url=url+"?sessionid="+ ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY,"").toString();
         call = RetrofitManager.getInstance().getService().getCommentList(url);
         call.enqueue(new Callback<ResponseModel<List<TaskEntity>>>() {
             @Override
@@ -49,7 +52,7 @@ public class CommentRemoteRepo implements CommentDataSource {
     @Override
     public void requestTaskDetails(int id, final TaskDetailsCallBack callBack) {
         callBack.onTaskStart();
-        String url = "task/detailTaskById?id=" + id;
+        String url = "task/detailTaskById?id=" + id+"&sessionid="+ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY,"").toString();
         Call<ResponseModel<TaskDetailsEntity>> call = RetrofitManager.getInstance().getService().getTaskDetails(url);
         call.enqueue(new Callback<ResponseModel<TaskDetailsEntity>>() {
             @Override

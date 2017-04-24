@@ -16,7 +16,9 @@ import com.wayto.android.module.notice.data.NoticeDetailsEntity;
 import com.wayto.android.module.notice.data.NoticeEntity;
 import com.wayto.android.module.vote.data.VoteEntity;
 
+import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -28,7 +30,9 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -48,7 +52,7 @@ public interface APIService {
      * @param url
      */
     @GET
-    Call<ResponseModel<UserInfoEntity>> loginRepo(@Url String url);
+    Call<ResponseModel<String>> loginRepo(@Url String url);
 
     /**
      * 主界面
@@ -56,17 +60,26 @@ public interface APIService {
      * author: hezhiWu
      * created at 2017/4/13 0:37
      */
-    @GET("memberIndex")
-    Call<ResponseModel<HomeEntity>> getMember();
+    @GET
+    Call<ResponseModel<HomeEntity>> getMember(@Url String url);
 
+    /**
+     * 消息报送
+     * <p>
+     * author: hezhiWu
+     * created at 2017/4/24 20:41
+     */
+    @Multipart
+    @POST
+    Call<ResponseModel> recordMsg(@Url String url, @PartMap Map<String,RequestBody> params);
     /**
      * 会务列表
      * <p>
      * author: hezhiWu
      * created at 2017/4/13 0:38
      */
-    @GET("meetingNotice/appMeetingNoticeList")
-    Call<ResponseModel<List<ConferenceEntity>>> getMeetingNotice();
+    @GET
+    Call<ResponseModel<List<ConferenceEntity>>> getMeetingNotice(@Url String url);
 
     /**
      * 会务详情
@@ -83,8 +96,8 @@ public interface APIService {
      * author: hezhiWu
      * created at 2017/4/13 10:36
      */
-    @GET("notice/ appNoticeList")
-    Call<ResponseModel<List<NoticeEntity>>> getNoticeList();
+    @GET
+    Call<ResponseModel<List<NoticeEntity>>> getNoticeList(@Url String url);
 
     /**
      * 任务详情
@@ -119,8 +132,8 @@ public interface APIService {
      * author: hezhiWu
      * created at 2017/4/15 14:25
      */
-    @GET("/vote/appVoteList")
-    Call<ResponseModel<List<VoteEntity>>> getVoteList();
+    @GET
+    Call<ResponseModel<List<VoteEntity>>> getVoteList(@Url String url);
 
     @GET
     Call<ResponseModel> arridVote(@Url String url);
