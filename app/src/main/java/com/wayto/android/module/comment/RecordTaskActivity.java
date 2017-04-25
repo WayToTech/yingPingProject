@@ -14,13 +14,16 @@ import com.wayto.android.module.comment.data.source.CommentDataSource;
 import com.wayto.android.module.comment.data.source.CommentRemoteRepo;
 import com.wayto.android.module.pictureFuncation.SelectPictureActivity;
 import com.wayto.android.module.pictureFuncation.data.PictureEntity;
+import com.wayto.android.utils.BitmapUtil;
+import com.wayto.android.utils.IFileUtils;
 import com.wayto.android.widget.AccessoryView;
 
-import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 任务执行
@@ -44,14 +47,17 @@ public class RecordTaskActivity extends BaseActivity implements CommentDataSourc
 
     private AccessoryView accessoryViewl;
 
+    private int taskId;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_task);
         ButterKnife.bind(this);
         setToolbarTitle("任务详情");
-        new CommentRemoteRepo().requestTaskDetails(getIntent().getIntExtra("id",-1),this);
-        accessoryViewl=new AccessoryView(this);
+        taskId = getIntent().getIntExtra("id", -1);
+        new CommentRemoteRepo().requestTaskDetails(taskId, this);
+        accessoryViewl = new AccessoryView(this);
         taskRecordImages.addView(accessoryViewl);
     }
 
@@ -82,9 +88,48 @@ public class RecordTaskActivity extends BaseActivity implements CommentDataSourc
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode== SelectPictureActivity.SELECT_PICTURE_RESULT_CODE){
-            ArrayList<PictureEntity> list=(ArrayList<PictureEntity>) data.getSerializableExtra("result");
-            accessoryViewl.setImageListToEntity(list);
+        if (resultCode == SelectPictureActivity.SELECT_PICTURE_RESULT_CODE) {
+            loadDialog = DialogFactory.createLoadingDialog(this, "图片处理...");
+            final List<PictureEntity> imgs = (List<PictureEntity>) data.getSerializableExtra("result");
+            if (imgs != null && imgs.size() > 0) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final String path = BitmapUtil.compressBitmap(imgs.get(0).getUrl(), IFileUtils.getImageCatchDir(), "");
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                accessoryViewl.setImageList(path);
+                                DialogFactory.dimissDialog(loadDialog);
+                            }
+                        });
+                    }
+                }).start();
+            }
         }
+    }
+
+    @OnClick(R.id.button_submit)
+    public void onClick() {
+        List<String> im = accessoryViewl.getImageLists();
+        if (im == null || im.size() <= 0) {
+            showToast("图片不能为空");
+            return;
+        }
+        loadDialog = DialogFactory.createLoadingDialog(this, "提交...");
+        new CommentRemoteRepo().recordTask(taskId, new File(im.get(0)), new CommentDataSource.RecordTaskCallBack() {
+            @Override
+            public void onRecordSuccess() {
+                showToast("提交成功");
+                finish();
+                DialogFactory.dimissDialog(loadDialog);
+            }
+
+            @Override
+            public void onRecordFailure(String msg) {
+                showToast("提交失败");
+                DialogFactory.dimissDialog(loadDialog);
+            }
+        });
     }
 }

@@ -3,6 +3,7 @@ package com.wayto.android.module.comment.data.source;
 import com.wayto.android.module.comment.data.TaskDetailsEntity;
 import com.wayto.android.module.comment.data.TaskEntity;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -14,19 +15,31 @@ import java.util.List;
  */
 public interface CommentDataSource {
 
-    interface CommentCallBack{
+    interface CommentCallBack {
         void onCommentSuccess(List<TaskEntity> entities);
-        void onCommentFailure(int code,String msg);
+
+        void onCommentFailure(int code, String msg);
     }
 
-    interface TaskDetailsCallBack{
+    interface TaskDetailsCallBack {
         void onTaskStart();
+
         void onTaskEnd();
+
         void onTaskSuccess(TaskDetailsEntity entity);
-        void onTaskFailure(int code,String msg);
+
+        void onTaskFailure(int code, String msg);
     }
 
-    void requestTaskData(String url,CommentCallBack commentCallBack);
+    interface RecordTaskCallBack {
+        void onRecordSuccess();
 
-    void requestTaskDetails(int id,TaskDetailsCallBack callBack);
+        void onRecordFailure(String msg);
+    }
+
+    void requestTaskData(String url, CommentCallBack commentCallBack);
+
+    void requestTaskDetails(int id, TaskDetailsCallBack callBack);
+
+    void recordTask(int taskId, File file, RecordTaskCallBack callBack);
 }

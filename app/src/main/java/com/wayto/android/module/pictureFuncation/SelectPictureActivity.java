@@ -90,6 +90,7 @@ public class SelectPictureActivity extends BaseActivity implements PictureContra
             selectePicLists = selectePics;
         }else {
             selectePicLists=new ArrayList<>();
+            selectePicLists = selectePics;
         }
         ISkipActivityUtil.startIntentForResult(activity, SelectPictureActivity.class, SELECT_PICTURE_REQUEST_CODE);
     }

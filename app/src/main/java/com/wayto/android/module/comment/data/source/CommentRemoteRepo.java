@@ -7,8 +7,13 @@ import com.wayto.android.module.comment.data.TaskEntity;
 import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.vendor.retrofit.RetrofitManager;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,8 +30,8 @@ public class CommentRemoteRepo implements CommentDataSource {
     Call<ResponseModel<List<TaskEntity>>> call;
 
     @Override
-    public void requestTaskData(String url,final CommentCallBack commentCallBack) {
-        url=url+"?sessionid="+ ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY,"").toString();
+    public void requestTaskData(String url, final CommentCallBack commentCallBack) {
+        url = url + "?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
         call = RetrofitManager.getInstance().getService().getCommentList(url);
         call.enqueue(new Callback<ResponseModel<List<TaskEntity>>>() {
             @Override
@@ -52,7 +57,7 @@ public class CommentRemoteRepo implements CommentDataSource {
     @Override
     public void requestTaskDetails(int id, final TaskDetailsCallBack callBack) {
         callBack.onTaskStart();
-        String url = "task/detailTaskById?id=" + id+"&sessionid="+ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY,"").toString();
+        String url = "task/detailTaskById?id=" + id + "&sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
         Call<ResponseModel<TaskDetailsEntity>> call = RetrofitManager.getInstance().getService().getTaskDetails(url);
         call.enqueue(new Callback<ResponseModel<TaskDetailsEntity>>() {
             @Override
@@ -75,6 +80,36 @@ public class CommentRemoteRepo implements CommentDataSource {
             public void onFailure(Call<ResponseModel<TaskDetailsEntity>> call, Throwable t) {
                 callBack.onTaskFailure(405, "请求失败");
                 callBack.onTaskEnd();
+            }
+        });
+    }
+
+    @Override
+    public void recordTask(int taskId, File file, final RecordTaskCallBack callBack) {
+        String url = "task/appUploadTaskImg?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
+        Map<String, RequestBody> map = new HashMap<>();
+        RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        map.put("file \"; Filename=\"" + file.getName(), body);
+        map.put("Filename", RequestBody.create(MediaType.parse("text/plain"), file.getName()));
+        map.put("taskid", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(taskId)));
+        Call<ResponseModel> call = RetrofitManager.getInstance().getService().recordTask(url, map);
+        call.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(Call<ResponseModel> call, Response<ResponseModel> response) {
+                if (response.code() == 200) {
+                    if (response.body().getCode() == 200) {
+                        callBack.onRecordSuccess();
+                    } else {
+                        callBack.onRecordFailure("上传失败");
+                    }
+                } else {
+                    callBack.onRecordFailure("上传失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel> call, Throwable t) {
+                callBack.onRecordFailure("上传失败");
             }
         });
     }

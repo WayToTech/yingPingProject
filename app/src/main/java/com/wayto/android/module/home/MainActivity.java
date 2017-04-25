@@ -1,11 +1,13 @@
 package com.wayto.android.module.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.umeng.socialize.UMShareAPI;
 import com.wayto.android.R;
 import com.wayto.android.base.BaseActivity;
 import com.wayto.android.base.BaseFragment;
@@ -181,6 +183,12 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 
     /**

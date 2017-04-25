@@ -71,7 +71,8 @@ public interface APIService {
      */
     @Multipart
     @POST
-    Call<ResponseModel> recordMsg(@Url String url, @PartMap Map<String,RequestBody> params);
+    Call<ResponseModel> recordMsg(@Url String url, @PartMap Map<String, RequestBody> params);
+
     /**
      * 会务列表
      * <p>
@@ -125,6 +126,16 @@ public interface APIService {
      */
     @GET
     Call<ResponseModel<TaskDetailsEntity>> getTaskDetails(@Url String url);
+
+    /**
+     * 上传任务
+     * <p>
+     * author: hezhiWu
+     * created at 2017/4/25 12:39
+     */
+    @Multipart
+    @POST
+    Call<ResponseModel> recordTask(@Url String url, @PartMap Map<String, RequestBody> params);
 
     /**
      * 投票列表

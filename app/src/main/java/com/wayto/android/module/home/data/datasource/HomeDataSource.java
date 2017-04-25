@@ -28,5 +28,6 @@ public interface HomeDataSource extends BaseDataSourse {
         void onRecordFailure(String msg);
     }
 
-    void recordMsg(String context, File file,RecordMsgCallBack callBack);
+    void recordMsg(String title,String context, File file,RecordMsgCallBack callBack);
+
 }

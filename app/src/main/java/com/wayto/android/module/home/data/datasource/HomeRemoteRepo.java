@@ -59,14 +59,13 @@ public class HomeRemoteRepo implements HomeDataSource {
     }
 
     @Override
-    public void recordMsg(String context, File file, final RecordMsgCallBack callBack) {
+    public void recordMsg(String title, String context, File file, final RecordMsgCallBack callBack) {
         String url = "message/appUploadMessage?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
         Map<String, RequestBody> map = new HashMap<>();
-//        map.put("file;Filename="+file.getName(), RequestBody.create(MediaType.parse("iamge/jpg"), file));
-//        map.put("fileName", RequestBody.create(MediaType.parse("text/plain"), file.getName()));
         RequestBody body = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        map.put("file; fileName="+file.getName(), body);
-        map.put("title", RequestBody.create(MediaType.parse("text/plain"), "消息报送"));
+        map.put("file \"; fileName=\"" + file.getName(), body);
+        map.put("fileName", RequestBody.create(MediaType.parse("text/plain"), file.getName()));
+        map.put("title", RequestBody.create(MediaType.parse("text/plain"), title));
         map.put("content", RequestBody.create(MediaType.parse("text/plain"), context));
         Call<ResponseModel> call = RetrofitManager.getInstance().getService().recordMsg(url, map);
         call.enqueue(new Callback<ResponseModel>() {

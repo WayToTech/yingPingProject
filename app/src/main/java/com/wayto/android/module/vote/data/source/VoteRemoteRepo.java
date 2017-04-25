@@ -49,7 +49,7 @@ public class VoteRemoteRepo implements VoteDataSource {
     @Override
     public void carridVote(int id, int voteId, final CarridVoteCallBack callBack) {
         callBack.onCarridVoteStart();
-        String url = "vote/appMemberVote?id=" + id + "&voteId=" + voteId + "?sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
+        String url = "vote/appMemberVote?id=" + id + "&voteId=" + voteId + "&sessionid=" + ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY, "").toString();
         Call<ResponseModel> call = RetrofitManager.getInstance().getService().arridVote(url);
         call.enqueue(new Callback<ResponseModel>() {
             @Override

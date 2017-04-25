@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class AccessoryView extends LinearLayout implements AdapterView.OnItemClickListener {
     /*默认图片数量*/
-    public final static int DEFAULT_PICTURE_NUMBER = 10;
+    public final static int DEFAULT_PICTURE_NUMBER = 2;
 
     private AccessoryImageGridView gridView;
     private AccessoryImgAdapter adapter;
@@ -124,7 +124,7 @@ public class AccessoryView extends LinearLayout implements AdapterView.OnItemCli
         } else {
             adapter.appendPositionToList(0, entity);
         }
-        if (adapter.getList().size() > DEFAULT_PICTURE_NUMBER) {
+        if (adapter.getList().size() >= DEFAULT_PICTURE_NUMBER) {
             adapter.removePos(adapter.getList().size() - 1);
             return;
         }
@@ -142,8 +142,6 @@ public class AccessoryView extends LinearLayout implements AdapterView.OnItemCli
                 adapter.appendPositionToList(0, entity);
             }
         }
-
-
     }
 
     /**

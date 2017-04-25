@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.wayto.android.R;
 import com.wayto.android.base.BaseFragment;
 import com.wayto.android.common.eventbus.NoticeEvent;
@@ -22,7 +25,9 @@ import com.wayto.android.module.conference.ConferenceDetailsActivity;
 import com.wayto.android.module.home.data.HomeEntity;
 import com.wayto.android.module.notice.NoticeDetailsActivity;
 import com.wayto.android.module.notice.data.NoticeEntity;
+import com.wayto.android.utils.ILog;
 import com.wayto.android.utils.ISkipActivityUtil;
+import com.wayto.android.utils.IUtil;
 import com.wayto.android.view.PullToRefreshRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -175,7 +180,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     content.setText(taskDateBean.getTitle());
                     typeTime.setText(taskDateBean.getTasktype() + "  截止时间" + taskDateBean.getCompletiontime());
                     integral.setText(entity.getIntegral() + "积分");
-                    String status = taskDateBean.getStatus();
+                    final String status = taskDateBean.getStatus();
                     if ("待完成".equals(status)) {
                         button.setText("立即执行");
                     } else {
@@ -185,6 +190,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            if ("已完成".equals(status)) {
+                                return;
+                            }
                             Bundle bundle = new Bundle();
                             bundle.putInt("id", taskDateBean.getId());
                             ISkipActivityUtil.startIntent(getContext(), RecordTaskActivity.class, bundle);
@@ -193,13 +201,34 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Uri uri;
-                            if (TextUtils.isEmpty(taskDateBean.getTaskurl())) {
-                                uri = Uri.parse("http://baidu.com");
-                            } else
-                                uri = Uri.parse(taskDateBean.getTaskurl());
-                            Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                            startActivity(it);
+//                            if ("已完成".equals(status)) {
+//                                return;
+//                            }
+                            IUtil.shot(getActivity());
+                            new ShareAction(getActivity())
+                                    .withText(taskDateBean.getTitle())
+                                    .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onStart(SHARE_MEDIA share_media) {
+                                            ILog.d(TAG, "onStart");
+                                        }
+
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            ILog.d(TAG, "onResult");
+                                        }
+
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            ILog.d(TAG, "onError");
+                                        }
+
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            ILog.d(TAG, "onCancel");
+                                        }
+                                    }).share();
                         }
                     });
                     taskContentLayout.addView(view);
@@ -239,12 +268,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.notice_title_layout:
-                NoticeEvent noticeEvent=new NoticeEvent();
+                NoticeEvent noticeEvent = new NoticeEvent();
                 noticeEvent.setFlag(1);
                 EventBus.getDefault().post(noticeEvent);
                 break;
             case R.id.meeting_title_layout:
-                NoticeEvent noticeEvent1=new NoticeEvent();
+                NoticeEvent noticeEvent1 = new NoticeEvent();
                 noticeEvent1.setFlag(2);
                 EventBus.getDefault().post(noticeEvent1);
                 break;

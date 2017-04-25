@@ -8,7 +8,7 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "com.wayto.android"
+        applicationId "com.jinhui.easy"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -111,5 +111,10 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     /*Bugly*/
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
-
+    compile files('libs/SocialSDK_WeChat_Simplify.jar')
+    compile files('libs/umeng_shareboard_widget.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/umeng_social_tool.jar')
 }

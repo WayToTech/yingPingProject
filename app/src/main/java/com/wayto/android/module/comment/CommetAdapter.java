@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * <p>
  * Copyright (c) 2017 Shenzhen O&M Cloud Co., Ltd. All rights reserved.
  */
-public class CommetAdapter  extends BaseRecyclerViewAdapter<TaskEntity> {
+public class CommetAdapter extends BaseRecyclerViewAdapter<TaskEntity> {
 
     public CommetAdapter(Context context) {
         super(context);
@@ -38,7 +38,7 @@ public class CommetAdapter  extends BaseRecyclerViewAdapter<TaskEntity> {
         itemViewHolder.content.setText(mLists.get(position).getTitle());
         itemViewHolder.typeTime.setText(mLists.get(position).getTasktype() + "  截止时间" + mLists.get(position).getCompletiontime());
         itemViewHolder.integral.setText(mLists.get(position).getIntegral() + "积分");
-        String status = mLists.get(position).getStatus();
+        final String status = mLists.get(position).getStatus();
         if ("待完成".equals(status)) {
             itemViewHolder.button.setText("立即执行");
         } else {
@@ -48,6 +48,9 @@ public class CommetAdapter  extends BaseRecyclerViewAdapter<TaskEntity> {
         itemViewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if ("已完成".equals(status)) {
+                    return;
+                }
                 Uri uri;
                 if (TextUtils.isEmpty(mLists.get(position).getTaskurl())) {
                     uri = Uri.parse("http://baidu.com");
@@ -60,9 +63,12 @@ public class CommetAdapter  extends BaseRecyclerViewAdapter<TaskEntity> {
         itemViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle=new Bundle();
-                bundle.putInt("id",mLists.get(position).getId());
-                ISkipActivityUtil.startIntent(mContent,RecordTaskActivity.class,bundle);
+                if ("已完成".equals(status)) {
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", mLists.get(position).getId());
+                ISkipActivityUtil.startIntent(mContent, RecordTaskActivity.class, bundle);
             }
         });
     }
@@ -83,7 +89,7 @@ public class CommetAdapter  extends BaseRecyclerViewAdapter<TaskEntity> {
             typeTime = ButterKnife.findById(view, R.id.task_type_time);
             integral = ButterKnife.findById(view, R.id.task_integral);
             button = ButterKnife.findById(view, R.id.task_button);
-            cardView=ButterKnife.findById(view,R.id.task_CardView);
+            cardView = ButterKnife.findById(view, R.id.task_CardView);
         }
     }
 }
