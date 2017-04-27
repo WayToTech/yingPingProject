@@ -11,15 +11,16 @@ public class ConferenceDetailsEntity {
 
 
     /**
-     * id : 1
-     * title : 会务通知标题
-     * content : 的撒旦撒旦撒旦撒旦撒打撒旦撒旦撒
-     * releasetime : 2017-04-11 20:20:32
+     * id : 7
+     * title : 我的通知
+     * content : 一）审议通过了关于取消原《2016年度利润分配方案》的议案； 公司高度重视监管部门的监管理念和监管导向，为切实维护广大股东利益特 别是保护中小股东权益，经公司建议并经公司控股股东浙江巨龙控股集团有限公 司（以下简称“巨龙控股”）
+     * releasetime : 2017-04-12 00:00:00
      * status : 发布
-     * createid : 1
-     * createtime : 2017-04-11 20:20:50
-     * modifyid : null
-     * modifytime : null
+     * address : 宁波市会议中心
+     * createid : 31
+     * createtime : 2017-04-27 13:14:47
+     * modifyid : 31
+     * modifytime : 2017-04-27 13:16:22
      */
 
     private int id;
@@ -27,10 +28,11 @@ public class ConferenceDetailsEntity {
     private String content;
     private String releasetime;
     private String status;
+    private String address;
     private int createid;
     private String createtime;
-    private Object modifyid;
-    private Object modifytime;
+    private int modifyid;
+    private String modifytime;
 
     public int getId() {
         return id;
@@ -72,6 +74,14 @@ public class ConferenceDetailsEntity {
         this.status = status;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public int getCreateid() {
         return createid;
     }
@@ -88,19 +98,19 @@ public class ConferenceDetailsEntity {
         this.createtime = createtime;
     }
 
-    public Object getModifyid() {
+    public int getModifyid() {
         return modifyid;
     }
 
-    public void setModifyid(Object modifyid) {
+    public void setModifyid(int modifyid) {
         this.modifyid = modifyid;
     }
 
-    public Object getModifytime() {
+    public String getModifytime() {
         return modifytime;
     }
 
-    public void setModifytime(Object modifytime) {
+    public void setModifytime(String modifytime) {
         this.modifytime = modifytime;
     }
 }

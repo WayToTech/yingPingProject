@@ -6,6 +6,7 @@ import com.wayto.android.module.accountFuncation.data.ModifyHeadEntity;
 import com.wayto.android.module.accountFuncation.data.ModifyPasswordEntity;
 import com.wayto.android.module.accountFuncation.data.UserInfoEntity;
 import com.wayto.android.module.comment.data.TaskDetailsEntity;
+import com.wayto.android.module.comment.data.TaskEndEntity;
 import com.wayto.android.module.comment.data.TaskEntity;
 import com.wayto.android.module.conference.data.ConferenceDetailsEntity;
 import com.wayto.android.module.conference.data.ConferenceEntity;
@@ -14,6 +15,7 @@ import com.wayto.android.module.mainFuncations.data.QiNiuTokenEntity;
 import com.wayto.android.module.notice.data.AppVersionEntity;
 import com.wayto.android.module.notice.data.NoticeDetailsEntity;
 import com.wayto.android.module.notice.data.NoticeEntity;
+import com.wayto.android.module.ranking.data.RankingEntity;
 import com.wayto.android.module.vote.data.VoteEntity;
 
 import java.io.File;
@@ -136,6 +138,17 @@ public interface APIService {
     @Multipart
     @POST
     Call<ResponseModel> recordTask(@Url String url, @PartMap Map<String, RequestBody> params);
+
+    @GET
+    Call<ResponseModel<TaskEndEntity>> getdetailTaskEndById(@Url String url);
+    /**
+     * 获取排名列表
+     * <p>
+     * author: hezhiWu
+     * created at 2017/4/27 9:32
+     */
+    @GET
+    Call<ResponseModel<RankingEntity>> getRanking(@Url String url);
 
     /**
      * 投票列表

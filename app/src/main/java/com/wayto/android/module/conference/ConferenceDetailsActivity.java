@@ -29,16 +29,19 @@ public class ConferenceDetailsActivity extends BaseActivity implements Conferenc
     TextView ConferenceDetailsContent;
     @BindView(R.id.ConferenceDetails_releaseTime)
     TextView ConferenceDetailsReleaseTime;
+    @BindView(R.id.ConferenceDetails_address)
+    TextView ConferenceDetailsAddress;
 
     private ConferenceRemoteRepo remoteRepo;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_comference_details);
         ButterKnife.bind(this);
         setToolbarTitle("会务详情");
-        remoteRepo=new ConferenceRemoteRepo();
-        remoteRepo.requestMeetingDetails(getIntent().getIntExtra("id",0),this);
+        remoteRepo = new ConferenceRemoteRepo();
+        remoteRepo.requestMeetingDetails(getIntent().getIntExtra("id", 0), this);
     }
 
     @Override
@@ -56,6 +59,7 @@ public class ConferenceDetailsActivity extends BaseActivity implements Conferenc
         if (entity != null) {
             ConferenceDetailsTitls.setText(entity.getTitle());
             ConferenceDetailsContent.setText(entity.getContent());
+            ConferenceDetailsAddress.setText("会务地址:"+entity.getAddress());
             ConferenceDetailsReleaseTime.setText("会务时间:" + entity.getReleasetime());
         }
     }

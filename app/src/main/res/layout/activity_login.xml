@@ -20,7 +20,7 @@
             android:layout_height="90dp"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="易评"
+            android:text="畅评"
             android:background="@drawable/ic_round_64"
             android:textColor="@color/white"
             android:textSize="20sp" />

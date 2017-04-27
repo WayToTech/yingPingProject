@@ -3,7 +3,9 @@ package com.wayto.android.module.comment.data.source;
 import com.wayto.android.common.Constant;
 import com.wayto.android.entity.ResponseModel;
 import com.wayto.android.module.comment.data.TaskDetailsEntity;
+import com.wayto.android.module.comment.data.TaskEndEntity;
 import com.wayto.android.module.comment.data.TaskEntity;
+import com.wayto.android.module.ranking.data.RepoCallBack;
 import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.vendor.retrofit.RetrofitManager;
 
@@ -110,6 +112,30 @@ public class CommentRemoteRepo implements CommentDataSource {
             @Override
             public void onFailure(Call<ResponseModel> call, Throwable t) {
                 callBack.onRecordFailure("上传失败");
+            }
+        });
+    }
+
+    public void getCommentDetails(long taskId, final RepoCallBack<TaskEndEntity> callBack){
+        String url="task/detailTaskEndById?id="+taskId+"&sessionid="+ISpfUtil.getValue(Constant.ACCESS_TOKEN_KEY,"").toString();
+        Call<ResponseModel<TaskEndEntity>> call=RetrofitManager.getInstance().getService().getdetailTaskEndById(url);
+        call.enqueue(new Callback<ResponseModel<TaskEndEntity>>() {
+            @Override
+            public void onResponse(Call<ResponseModel<TaskEndEntity>> call, Response<ResponseModel<TaskEndEntity>> response) {
+                if (response.code()==200){
+                    if (response.body().getCode()==200){
+                        callBack.onDataAvailable(response.body().getData());
+                    }else {
+                        callBack.onDataNotAvailable(response.body().getCode(),response.body().getMessage());
+                    }
+                }else {
+                    callBack.onDataNotAvailable(405,"获取失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseModel<TaskEndEntity>> call, Throwable t) {
+                callBack.onDataNotAvailable(405,"获取失败");
             }
         });
     }

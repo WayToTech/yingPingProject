@@ -36,7 +36,7 @@ public class NoticeRemoteRepo implements NoticeDataSource {
                     if (response.body().getCode() == 200) {
                         callBack.onNoticeSuccess(response.body().getData());
                     } else {
-                        callBack.onNoticeFailure(response.code(), response.body().getMessage());
+                        callBack.onNoticeFailure(response.body().getCode(), response.body().getMessage());
                     }
                 } else {
                     callBack.onNoticeFailure(response.code(), "请求失败");

@@ -35,7 +35,7 @@ public class ConferenceRemoteRepo implements ConferenceDatasource {
                     if (response.body().getCode() == 200) {
                         callBack.onConferenceSuccess(response.body().getData());
                     } else {
-                        callBack.onConferenceFailure(response.code(), response.body().getMessage());
+                        callBack.onConferenceFailure(response.body().getCode(), response.body().getMessage());
                     }
                 } else {
                     callBack.onConferenceFailure(response.code(), "请求失败");

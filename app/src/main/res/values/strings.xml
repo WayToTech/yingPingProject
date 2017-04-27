@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">易评</string>
+    <string name="app_name">畅评</string>
 
     <!--Main Tab-->
     <string name="main_home_tab">主页</string>
     <string name="main_mission_tab">网评</string>
-    <string name="main_track_tab">投票</string>
+    <string name="main_track_tab">排名</string>
     <string name="main_record_tab">会务</string>
     <string name="main_mine_tab">公告</string>
 

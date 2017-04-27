@@ -4,7 +4,7 @@ android {
      */
     buildTypes {
         release {
-            buildConfigField "String", "DOMAI", "\"http://idc.wayto.com.cn:8081/\""
+            buildConfigField "String", "DOMAI", "\"http://www.hfieta.com/\""
             buildConfigField "String", "QINIU_DOMAIN", "\"http://img.wayto.com.cn/\""
             buildConfigField "boolean", "LOGSWITCH", "true"
         }

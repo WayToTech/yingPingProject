@@ -18,6 +18,7 @@ import com.wayto.android.module.conference.ConferenceListFragment;
 import com.wayto.android.module.mainFuncations.MainContract;
 import com.wayto.android.module.notice.CheckAppVersion.CheckAppVersionContract;
 import com.wayto.android.module.notice.NoticeListFragment;
+import com.wayto.android.module.ranking.RankingFragment;
 import com.wayto.android.module.vote.VoteListFragment;
 import com.wayto.android.utils.IActivityManage;
 import com.wayto.android.view.MainBottomNavigationBar;
@@ -86,13 +87,13 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 R.string.main_mine_tab};
         tabIconRes = new int[]{R.drawable.ic_home_24,
                 R.drawable.ic_comment_24,
-                R.drawable.ic_vote_24,
+                R.drawable.ic_ranking_24,
                 R.drawable.ic_conference_24,
                 R.drawable.ic_notice_24};
 
         tabModule.add(new HomeFragment());
         tabModule.add(new CommentListFragment());
-        tabModule.add(new VoteListFragment());
+        tabModule.add(new RankingFragment());
         tabModule.add(new ConferenceListFragment());
         tabModule.add(new NoticeListFragment());
     }
@@ -124,7 +125,7 @@ public class MainActivity extends BaseActivity implements MainBottomNavigationBa
                 break;
             case TAB_TRACK:
                 setToolbarCenterTitle(R.string.main_track_tab);
-                setToolbarVisibility(View.VISIBLE);
+                setToolbarVisibility(View.GONE);
                 break;
             case TAB_RECORD:
                 setToolbarCenterTitle(R.string.main_record_tab);

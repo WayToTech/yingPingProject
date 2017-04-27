@@ -58,6 +58,12 @@ public class CommentListFragment extends BaseFragment implements PullToRefreshRe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        remoteRepo.requestTaskData("task/appTaskList", this);
+    }
+
+    @Override
     public void onDownRefresh() {
         remoteRepo.requestTaskData("task/appTaskList", this);
     }

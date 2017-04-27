@@ -209,12 +209,13 @@ public class AccessoryView extends LinearLayout implements AdapterView.OnItemCli
     public void setShowImage(String url) {
         PictureEntity entity = new PictureEntity();
         entity.setUrl(url);
+        setShowImage();
         adapter.appendToList(entity);
     }
 
     public void setShowImage() {
         adapter.setShowCloseIcon(false);
-        if (adapter.getList().get(adapter.getCount() - 1).equals(AccessoryImgAdapter.ADD_IMG_FLAG)) {
+        if (adapter.getList().get(adapter.getCount() - 1).getUrl().equals(AccessoryImgAdapter.ADD_IMG_FLAG)) {
             adapter.removePos(adapter.getCount() - 1);
         }
     }

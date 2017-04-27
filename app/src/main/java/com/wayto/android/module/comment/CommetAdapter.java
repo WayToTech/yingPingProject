@@ -64,11 +64,14 @@ public class CommetAdapter extends BaseRecyclerViewAdapter<TaskEntity> {
             @Override
             public void onClick(View view) {
                 if ("已完成".equals(status)) {
-                    return;
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", mLists.get(position).getId());
+                    ISkipActivityUtil.startIntent(mContent, TaskDetailsActivity.class, bundle);
+                }else {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id", mLists.get(position).getId());
+                    ISkipActivityUtil.startIntent(mContent, RecordTaskActivity.class, bundle);
                 }
-                Bundle bundle = new Bundle();
-                bundle.putInt("id", mLists.get(position).getId());
-                ISkipActivityUtil.startIntent(mContent, RecordTaskActivity.class, bundle);
             }
         });
     }

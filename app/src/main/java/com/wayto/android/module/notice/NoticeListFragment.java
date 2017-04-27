@@ -117,18 +117,21 @@ public class NoticeListFragment extends BaseFragment implements PullToRefreshRec
                     ISkipActivityUtil.startIntent(mContent,NoticeDetailsActivity.class,bundle);
                 }
             });
+            itemViewHolder.address.setVisibility(View.GONE);
         }
 
         class ItemViewHolder extends RecyclerView.ViewHolder {
             TextView contentText;
             TextView timeText;
             CardView cardView;
+            TextView address;
 
             public ItemViewHolder(View view) {
                 super(view);
                 contentText = ButterKnife.findById(view, R.id.conference_content);
                 timeText = ButterKnife.findById(view, R.id.conference_time);
                 cardView=ButterKnife.findById(view,R.id.item_notice_cardView);
+                address=ButterKnife.findById(view,R.id.conference_address);
                 ButterKnife.bind(this, view);
             }
         }

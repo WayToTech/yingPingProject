@@ -40,7 +40,7 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = outputFile.name.replace(".apk", "yingPing_${currentTime()}_${defaultConfig.versionCode}.${defaultConfig.versionName}.apk")
+                def fileName = outputFile.name.replace(".apk", "easy_${currentTime()}_${defaultConfig.versionName}.apk")
                 output.outputFile = new File(outputFile.parent, fileName)
             }
         }
@@ -50,14 +50,14 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.config
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-//            signingConfig signingConfigs.config
-            minifyEnabled false /*开启代码混淆*/
-            shrinkResources false
+            signingConfig signingConfigs.config
+            minifyEnabled true /*开启代码混淆*/
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

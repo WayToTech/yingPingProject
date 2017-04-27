@@ -123,6 +123,7 @@ public class HomeEntity {
         private int id;
         private String title;
         private String releasetime;
+        private String address;
 
         public int getId() {
             return id;
@@ -146,6 +147,14 @@ public class HomeEntity {
 
         public void setReleasetime(String releasetime) {
             this.releasetime = releasetime;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
         }
     }
 

@@ -27,14 +27,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_toLeftOf="@+id/task_button"
+                android:layout_marginRight="3dp">
 
                 <TextView
                     android:id="@+id/task_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:singleLine="true"
                     android:text="内容展示区"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />

@@ -1,7 +1,5 @@
 package com.wayto.android.module.home;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -16,18 +14,23 @@ import android.widget.TextView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.wayto.android.R;
 import com.wayto.android.base.BaseFragment;
+import com.wayto.android.common.Constant;
+import com.wayto.android.common.dialog.DialogFactory;
 import com.wayto.android.common.eventbus.NoticeEvent;
 import com.wayto.android.module.comment.RecordTaskActivity;
 import com.wayto.android.module.comment.TaskClassifyActivity;
+import com.wayto.android.module.comment.TaskDetailsActivity;
 import com.wayto.android.module.conference.ConferenceDetailsActivity;
 import com.wayto.android.module.home.data.HomeEntity;
 import com.wayto.android.module.notice.NoticeDetailsActivity;
-import com.wayto.android.module.notice.data.NoticeEntity;
+import com.wayto.android.utils.IActivityManage;
 import com.wayto.android.utils.ILog;
 import com.wayto.android.utils.ISkipActivityUtil;
-import com.wayto.android.utils.IUtil;
+import com.wayto.android.utils.ISpfUtil;
 import com.wayto.android.view.PullToRefreshRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -98,8 +101,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
     }
 
     @Override
-    public void onDownRefresh() {
+    public void onResume() {
+        super.onResume();
+
         homePresenter.requestMember();
+    }
+
+    @Override
+    public void onDownRefresh() {
     }
 
     @Override
@@ -126,6 +135,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
             /*公告*/
             if (entity.getNoticeDate().size() > 0) {
                 noticeNumber.setText(entity.getNoticeDate().size() + "");
+                noticeContentLayout.removeAllViews();
                 for (final HomeEntity.NoticeDateBean noticeDateBean : entity.getNoticeDate()) {
                     View view = LayoutInflater.from(getContext()).inflate(R.layout.item_notice, null);
                     TextView contentTextView = (TextView) view.findViewById(R.id.notice_content);
@@ -145,6 +155,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
             }
             /*会务通知*/
             if (entity.getMeetingNoticeDate().size() > 0) {
+                meetingContentLayout.removeAllViews();
                 for (final HomeEntity.MeetingNoticeDateBean meetingNoticeDateBean : entity.getMeetingNoticeDate()) {
                     meetingNumber.setText(entity.getMeetingNoticeDate().size() + "");
                     View view = LayoutInflater.from(getContext()).inflate(R.layout.item_meeting, null);
@@ -161,7 +172,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                     });
                     timeTextView.setText("会议时间:" + meetingNoticeDateBean.getReleasetime());
                     contenTextView.setText(meetingNoticeDateBean.getTitle());
-                    address.setText("会议地址:");
+                    address.setText("会议地址:" + meetingNoticeDateBean.getAddress());
                     meetingContentLayout.addView(view);
                 }
             } else {
@@ -171,9 +182,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
             /*网评任务*/
             if (entity.getTaskDate().size() > 0) {
                 taskNumber.setText(entity.getTaskDate().size() + "");
+                taskContentLayout.removeAllViews();
                 for (final HomeEntity.TaskDateBean taskDateBean : entity.getTaskDate()) {
                     View view = LayoutInflater.from(getContext()).inflate(R.layout.item_task, null);
-                    TextView content = ButterKnife.findById(view, R.id.task_content);
+                    final TextView content = ButterKnife.findById(view, R.id.task_content);
                     TextView typeTime = ButterKnife.findById(view, R.id.task_type_time);
                     TextView integral = ButterKnife.findById(view, R.id.task_integral);
                     Button button = ButterKnife.findById(view, R.id.task_button);
@@ -191,11 +203,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                         @Override
                         public void onClick(View view) {
                             if ("已完成".equals(status)) {
-                                return;
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("id", taskDateBean.getId());
+                                ISkipActivityUtil.startIntent(getContext(), TaskDetailsActivity.class, bundle);
+                            } else {
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("id", taskDateBean.getId());
+                                ISkipActivityUtil.startIntent(getContext(), RecordTaskActivity.class, bundle);
                             }
-                            Bundle bundle = new Bundle();
-                            bundle.putInt("id", taskDateBean.getId());
-                            ISkipActivityUtil.startIntent(getContext(), RecordTaskActivity.class, bundle);
                         }
                     });
                     button.setOnClickListener(new View.OnClickListener() {
@@ -204,9 +219,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
 //                            if ("已完成".equals(status)) {
 //                                return;
 //                            }
-                            IUtil.shot(getActivity());
+//                            IUtil.shot(getActivity());
+                            UMWeb web = new UMWeb(TextUtils.isEmpty(taskDateBean.getTaskurl()) ? "http://baidu.com" : taskDateBean.getTaskurl());
+                            web.setTitle(taskDateBean.getTitle());//标题
+                            web.setThumb(new UMImage(getContext(), R.mipmap.ic_logo));  //缩略图
+                            web.setDescription("来至畅评分享");//描述
                             new ShareAction(getActivity())
-                                    .withText(taskDateBean.getTitle())
+                                    .withMedia(web)
                                     .setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                                     .setCallback(new UMShareListener() {
                                         @Override
@@ -221,6 +240,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
 
                                         @Override
                                         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            showToast(throwable.getMessage());
                                             ILog.d(TAG, "onError");
                                         }
 
@@ -231,6 +251,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                                     }).share();
                         }
                     });
+
                     taskContentLayout.addView(view);
                 }
             } else {
@@ -264,7 +285,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
         ISkipActivityUtil.startIntent(getContext(), RecordMessageActivity.class);
     }
 
-    @OnClick({R.id.notice_title_layout, R.id.meeting_title_layout, R.id.task_title_layout})
+    @OnClick({R.id.Home_exit, R.id.notice_title_layout, R.id.meeting_title_layout, R.id.task_title_layout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.notice_title_layout:
@@ -279,6 +300,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView,
                 break;
             case R.id.task_title_layout:
                 ISkipActivityUtil.startIntent(getContext(), TaskClassifyActivity.class);
+                break;
+            case R.id.Home_exit:
+                DialogFactory.showMsgDialog(getContext(), getString(R.string.dialog_title_exit), getString(R.string.exit_msg) + getString(R.string.app_name) + "?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ISpfUtil.setValue(Constant.ACCOUNT_KEY, "");
+                        ISpfUtil.setValue(Constant.PSSWORD_KEY, "");
+                        System.gc();
+                        IActivityManage.getInstance().exit();
+                        System.exit(0);
+                    }
+                });
                 break;
         }
     }
