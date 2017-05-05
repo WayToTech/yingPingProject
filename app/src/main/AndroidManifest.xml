@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wayto.android">
+    package="com.jinhui.easy">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -28,6 +28,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <supports-screens
         android:anyDensity="true"
@@ -36,7 +41,7 @@
         android:smallScreens="true" />
 
     <application
-        android:name=".base.DataApplication"
+        android:name="com.jinhui.easy.base.DataApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
@@ -44,7 +49,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".module.accountFuncation.SplashActivity"
+            android:name="com.jinhui.easy.module.accountFuncation.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NotitleTheme">
             <intent-filter>
@@ -55,83 +60,88 @@
         </activity>
 
         <activity
-            android:name=".module.home.MainActivity"
+            android:name="com.jinhui.easy.module.home.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".wxapi.WXEntryActivity"
+        <activity android:name="com.jinhui.easy.wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name=".module.accountFuncation.LoginActivity"
+            android:name="com.jinhui.easy.module.accountFuncation.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.accountFuncation.UserInfoActivity"
+            android:name=".ShareActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.accountFuncation.EditUserInfoActivity"
+            android:name="com.jinhui.easy.module.accountFuncation.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.home.RecordMessageActivity"
+            android:name="com.jinhui.easy.module.accountFuncation.EditUserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.accountFuncation.ModifyPasswordActivity"
+            android:name="com.jinhui.easy.module.home.RecordMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.notice.SetingInfoActivity"
+            android:name="com.jinhui.easy.module.accountFuncation.ModifyPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.notice.NoticeDetailsActivity"
+            android:name="com.jinhui.easy.module.notice.SetingInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.comment.RecordTaskActivity"
+            android:name="com.jinhui.easy.module.notice.NoticeDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.comment.TaskDetailsActivity"
+            android:name="com.jinhui.easy.module.comment.RecordTaskActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.comment.TaskClassifyActivity"
+            android:name="com.jinhui.easy.module.comment.TaskDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.vote.VoteActivity"
+            android:name="com.jinhui.easy.module.comment.TaskClassifyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.conference.ConferenceDetailsActivity"
+            android:name="com.jinhui.easy.module.vote.VoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.pictureFuncation.SelectPictureActivity"
+            android:name="com.jinhui.easy.module.conference.ConferenceDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/JK.SwipeBack.Transparent.Theme" />
 
         <activity
-            android:name=".module.pictureFuncation.ShowPictureActivity"
+            android:name="com.jinhui.easy.module.pictureFuncation.SelectPictureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/JK.SwipeBack.Transparent.Theme" />
+
+        <activity
+            android:name="com.jinhui.easy.module.pictureFuncation.ShowPictureActivity"
             android:screenOrientation="portrait"
             android:theme="@style/NotitleTheme" />
 

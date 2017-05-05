@@ -6,7 +6,7 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
-    <com.wayto.map.MapView
+    <com.jinhui.map.MapView
         android:id="@+id/SelectePointToMap_mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

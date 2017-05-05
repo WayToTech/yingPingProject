@@ -6,21 +6,21 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.wayto.android.widget.FormWriteView
+    <com.jinhui.easy.widget.FormWriteView
         android:id="@+id/AddDeviceFragment_name_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         form:wvHint="输入名称"
         form:wvItemName="上报名称" />
 
-    <com.wayto.android.widget.FormWriteView
+    <com.jinhui.easy.widget.FormWriteView
         android:id="@+id/AddDeviceFragment_unit_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         form:wvHint="输入单位"
         form:wvItemName="上报单位" />
 
-    <com.wayto.android.widget.FormWriteView
+    <com.jinhui.easy.widget.FormWriteView
         android:id="@+id/AddDeviceFragment_remark_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

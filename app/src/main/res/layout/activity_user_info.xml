@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wayto.android.view.ReboundScrollView
+    <com.jinhui.easy.view.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,19 +30,19 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <com.wayto.frame.widget.FormWriteView
+                <com.jinhui.frame.widget.FormWriteView
                     android:id="@+id/UserInfo_account_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     form:wvItemName="账号" />
 
-                <com.wayto.frame.widget.FormWriteView
+                <com.jinhui.frame.widget.FormWriteView
                     android:id="@+id/UserInfo_depart_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     form:wvItemName="部门" />
 
-                <com.wayto.frame.widget.FormWriteView
+                <com.jinhui.frame.widget.FormWriteView
                     android:id="@+id/UserInfo_company_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,5 +50,5 @@
 
             </LinearLayout>
         </LinearLayout>
-    </com.wayto.android.view.ReboundScrollView>
+    </com.jinhui.easy.view.ReboundScrollView>
 </LinearLayout>

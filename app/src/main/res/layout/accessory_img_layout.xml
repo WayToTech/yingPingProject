@@ -15,7 +15,7 @@
         android:paddingTop="10dip">
 
 
-        <com.wayto.android.view.AccessoryImageGridView
+        <com.jinhui.easy.view.AccessoryImageGridView
             android:id="@+id/accessory_gridview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

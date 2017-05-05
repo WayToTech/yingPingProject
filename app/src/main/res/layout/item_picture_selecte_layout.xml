@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.wayto.android.view.PhotoAlbumImageView
+        <com.jinhui.easy.view.PhotoAlbumImageView
             android:id="@+id/ItemSelectePicture_imageView"
             android:layout_width="match_parent"
             android:layout_height="100dip"

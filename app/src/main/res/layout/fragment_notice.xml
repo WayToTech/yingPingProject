@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wayto.android.view.PullToRefreshRecyclerView
+    <com.jinhui.easy.view.PullToRefreshRecyclerView
         android:id="@+id/noticeFragment_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

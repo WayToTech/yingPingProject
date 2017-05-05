@@ -36,7 +36,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="20dp">
 
-        <com.wayto.android.widget.ResetEditView
+        <com.jinhui.easy.widget.ResetEditView
             android:id="@+id/loginActivity_account_editView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
             style="@style/line_horizontal"
             android:layout_marginLeft="10dp" />
 
-        <com.wayto.android.widget.ResetEditView
+        <com.jinhui.easy.widget.ResetEditView
             android:id="@+id/loginActivity_password_editView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

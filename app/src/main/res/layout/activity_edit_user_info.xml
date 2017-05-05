@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wayto.android.view.ReboundScrollView
+    <com.jinhui.easy.view.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -93,5 +93,5 @@
 
             <View style="@style/line_horizontal" />
         </LinearLayout>
-    </com.wayto.android.view.ReboundScrollView>
+    </com.jinhui.easy.view.ReboundScrollView>
 </LinearLayout>

@@ -11,7 +11,7 @@
         android:background="@color/colorPrimary" />
 
 
-    <com.wayto.android.view.ReboundScrollView
+    <com.jinhui.easy.view.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -306,9 +306,9 @@
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-    </com.wayto.android.view.ReboundScrollView>
+    </com.jinhui.easy.view.ReboundScrollView>
 
-    <com.wayto.android.view.PullToRefreshRecyclerView
+    <com.jinhui.easy.view.PullToRefreshRecyclerView
         android:id="@+id/HomeRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

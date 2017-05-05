@@ -10,7 +10,7 @@
         android:layout_height="60dp"
         android:background="@color/colorPrimaryDark">
 
-        <com.wayto.android.widget.SwitchButtonTwo
+        <com.jinhui.easy.widget.SwitchButtonTwo
             android:id="@+id/Fanking_switchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,12 +19,12 @@
             app:textRight="任务排名" />
     </RelativeLayout>
 
-    <com.wayto.android.view.PullToRefreshRecyclerView
+    <com.jinhui.easy.view.PullToRefreshRecyclerView
         android:id="@+id/RankingRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <com.wayto.android.view.PullToRefreshRecyclerView
+    <com.jinhui.easy.view.PullToRefreshRecyclerView
         android:id="@+id/RankingTaskRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
